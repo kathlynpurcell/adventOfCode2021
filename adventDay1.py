@@ -2057,16 +2057,40 @@ report=[156	,
 3769	,
 3770	]
 
+report_test = [199,
+200,
+208,
+210,
+200,
+207,
+240,
+269,
+260,
+263]
 
-prev_dist = report[0]
-print(f"nan : {prev_dist} : (N/A - no previous measurement)")
-counter = 0 
-for dist in report[1:]:
-    if dist > prev_dist: 
-        print(f"{dist} : {prev_dist} :  increase")
+
+prev_dist_sum = report[0]
+print(f"nan : {prev_dist_sum} : (N/A - no previous measurement)")
+
+# the first n/a needs to be removed from an increase
+counter = -1 
+
+one = report[0]
+two = report[1]
+
+for dist in report[2:]:
+    three = dist
+    dist_sum = one+two+three
+    if dist_sum > prev_dist_sum: 
+        print(f"{dist_sum} : {prev_dist_sum} :  increase")
         counter+=1
-    elif dist< prev_dist: print(f"{dist} : {prev_dist} :  decrease")
-    else: print(f"{dist} : {prev_dist} :  N/A")
-    prev_dist=dist
+    elif dist_sum< prev_dist_sum: print(f"{dist_sum} : {prev_dist_sum} :  decrease")
+    else: print(f"{dist_sum} : {prev_dist_sum} :  N/A")
+    one = two
+    two = three
+    prev_dist_sum = dist_sum
+    
+
+
     
 print(f"Number of increases: {counter}")
